@@ -1,0 +1,37 @@
+
+Agent · multi-step, 3+ tools, one over MCP
+   over MCP (stdio, servers/madar_mcp.py): ['compute_fee', 'get_permit', 'list_slots', 'search_policies']
+   local: ['book_inspection', 'reschedule_inspection', 'create_refund', 'escalate', 'send_email', 'load_skill']
+✅ 10 tools available to the agent
+✅ get_permit and list_slots come over MCP
+✅ the MCP server exposes no write tool (least privilege)
+   multi-step run: see results/demo_booking.txt (get_permit → list_slots → book_inspection → search_policies)
+
+Context engineering · spec file, memory, compaction and budget rule
+✅ AGENTS.md is the system prompt (4,730 characters)
+✅ skills index in the prompt: ['appeal', 'escalation', 'inspection-booking', 'refund-request']
+✅ memory keeps language + verified permits only: {'language': 'ar', 'permits': ['FTR-30311']}
+✅ memory is injected into the next system prompt
+✅ memory refuses 'mobile 0532236654' (PDPL)
+✅ memory refuses 'id 1048213372' (PDPL)
+✅ memory path traversal blocked
+✅ compaction: 40 messages → 24, starting on a user message
+✅ compaction drops old reasoning
+✅ tool results capped at 3,000 characters
+
+Harness control · human approval for writes, step / cost / token budgets
+✅ a write tool call is queued as an approval card and NOT executed (0 bookings in the database)
+✅ pending card: book_inspection
+✅ budgets per message: 8 steps, $0.05, 60,000 tokens
+✅ token budget stops the loop before the next model call (token budget of 1,000 exceeded (5,000 used))
+✅ audit log events: ['approval_requested', 'call', 'result']
+✅ audit log redacts the ID digits and the mobile
+
+Security · the egress guard, enforced in code
+✅ blocks a recipient that is not a verified applicant's registered email
+✅ allows the registered email of the permit verified in this conversation (FTR-30311)
+✅ blocks a mobile number in the message
+✅ blocks links outside madar.example
+✅ a blocked email never even reaches an approval card
+
+24/24 checks passed

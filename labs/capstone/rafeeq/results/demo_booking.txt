@@ -1,0 +1,72 @@
+
+🧑 Hi, I'm Noura. My food truck permit FTR-30311 was approved and I need the health inspection. National ID ends 6654, mobile 0532236654. What slots do you have on Wednesday 4 or Thursday 5 November?
+🧑 user   Hi, I'm Noura. My food truck permit FTR-30311 was approved and I need the health inspection. National ID ends 6654, mobile 0532236654. What slots do you have on…
+🔧 call   get_permit({"permit_id": "FTR-30311", "national_id_last4": "6654", "mobile": "0532236654"})
+📦 result { "permit_id": "FTR-30311", "type": "FTR", "status": "approved", "applicant": "Noura Al-Otaibi", "national_id": "******6654", "district": "Al-Rawdah", "details"…
+🤖 model  Verification succeeded — your permit FTR-30311 (food truck, Al-Rawdah district) is **approved** with no inspection booked yet. Let me find available slots for W…
+🔧 call   list_slots({"district": "Al-Rawdah", "date_from": "2026-11-04", "date_to": "2026-11-05"})
+📦 result 2026-11-04 09:00 2026-11-05 08:00 2026-11-05 10:00 2026-11-05 12:00 2026-11-05 13:00
+✅ final  Here are the available health inspection slots in Al-Rawdah: 1. **Wednesday 4 November 2026, 09:00** 2. **Thursday 5 November 2026, 08:00** 3. **Thursday 5 Nove…
+
+🤖 Here are the available health inspection slots in Al-Rawdah:
+
+1. **Wednesday 4 November 2026, 09:00**
+2. **Thursday 5 November 2026, 08:00**
+3. **Thursday 5 November 2026, 10:00**
+
+(More slots exist on Thursday — 12:00 and 13:00 — but I'm showing up to three as per procedure.)
+
+Please tell me which slot you'd like, and I'll book it for your permit FTR-30311. Nothing is scheduled until you confirm and approve the booking card.
+   [steps so far 3 · tokens 14,037 · cost $0.0000]
+
+🧑 The Wednesday 4 November slot at 09:00 please. Yes, book it.
+🧑 user   The Wednesday 4 November slot at 09:00 please. Yes, book it.
+🔧 call   book_inspection({"permit_id": "FTR-30311", "slot": "2026-11-04 09:00", "national_id_last4": "6654", "mobile": "0532236654"})
+🛡️ guard  before_tool blocked book_inspection
+📦 result {"status": "pending_approval", "message": "book_inspection was NOT executed. The citizen now sees an approval card for it. Do not call it again. Tell the citize…
+✅ final  An approval card has appeared for you. Please review it: - **Permit:** FTR-30311 (food truck) - **Inspection:** Health inspection - **Slot:** Wednesday 4 Novemb…
+
+🤖 An approval card has appeared for you. Please review it:
+
+- **Permit:** FTR-30311 (food truck)
+- **Inspection:** Health inspection
+- **Slot:** Wednesday 4 November 2026, 09:00
+- **District:** Al-Rawdah
+
+Nothing is scheduled yet. Press **Approve** on the card to confirm, or **Reject** to cancel. Let me know once you've decided.
+   [steps so far 5 · tokens 24,064 · cost $0.0000]
+
+🛡️  APPROVAL CARD → [{'tool': 'book_inspection', 'args': {'permit_id': 'FTR-30311', 'slot': '2026-11-04 09:00', 'national_id_last4': '6654', 'mobile': '0532236654'}}] → approved (--yes)
+🧑 user   [Harness note, not written by the citizen] The citizen answered the approval card(s): - book_inspection({"permit_id": "FTR-30311", "slot": "2026-11-04 09:00", "…
+🔧 call   search_policies({"query": "food truck health inspection what to prepare documents requirements"})
+📦 result { "policy_id": "POL-01", "title": "Permit types and required documents", "text": "# Permit types and required documents\n\nMadar Municipal Services issues five …
+✅ final  Your inspection is booked! Here are the details: - **Inspection ID:** INS-9002 - **Permit:** FTR-30311 (food truck) - **Type:** Health inspection - **Slot:** We…
+
+🤖 Your inspection is booked! Here are the details:
+
+- **Inspection ID:** INS-9002
+- **Permit:** FTR-30311 (food truck)
+- **Type:** Health inspection
+- **Slot:** Wednesday 4 November 2026, 09:00
+- **District:** Al-Rawdah
+- **Status:** Booked
+
+**What to prepare:** your truck's vehicle registration and a valid health certificate for each of your 3 workers. These are required for the food truck health inspection (POL-01).
+
+You can reschedule or cancel free of charge up to 24 hours before the slot (POL-05). If you need anything else, let me know!
+   [steps so far 7 · tokens 35,795 · cost $0.0000]
+
+📒 database: [{'inspection_id': 'INS-9002', 'permit_id': 'FTR-30311', 'kind': 'health', 'slot': '2026-11-04 09:00', 'district': 'Al-Rawdah', 'status': 'booked'}]
+🧠 memory: {'language': 'en', 'permits': ['FTR-30311']}
+🧾 audit (this session):
+   {"event": "call", "tool": "get_permit", "args": {"permit_id": "FTR-30311", "national_id_last4": "****", "mobile": "*******54"}}
+   {"event": "result", "tool": "get_permit", "args": {"permit_id": "FTR-30311", "national_id_last4": "****", "mobile": "*******54"}}
+   {"event": "call", "tool": "list_slots", "args": {"district": "Al-Rawdah", "date_from": "2026-11-04", "date_to": "2026-11-05"}}
+   {"event": "result", "tool": "list_slots", "args": {"district": "Al-Rawdah", "date_from": "2026-11-04", "date_to": "2026-11-05"}}
+   {"event": "call", "tool": "book_inspection", "args": {"permit_id": "FTR-30311", "slot": "2026-11-04 09:00", "national_id_last4": "****", "mobile": "*******54"}}
+   {"event": "approval_requested", "tool": "book_inspection", "args": {"permit_id": "FTR-30311", "slot": "2026-11-04 09:00", "national_id_last4": "****", "mobile": "*******54"}}
+   {"event": "result", "tool": "book_inspection", "args": {"permit_id": "FTR-30311", "slot": "2026-11-04 09:00", "national_id_last4": "****", "mobile": "*******54"}}
+   {"event": "approved", "tool": "book_inspection", "args": {"permit_id": "FTR-30311", "slot": "2026-11-04 09:00", "national_id_last4": "****", "mobile": "*******54"}}
+   {"event": "result", "tool": "book_inspection", "args": {"permit_id": "FTR-30311", "slot": "2026-11-04 09:00", "national_id_last4": "****", "mobile": "*******54"}}
+   {"event": "call", "tool": "search_policies", "args": {"query": "food truck health inspection what to prepare documents requirements"}}
+   {"event": "result", "tool": "search_policies", "args": {"query": "food truck health inspection what to prepare documents requirements"}}
