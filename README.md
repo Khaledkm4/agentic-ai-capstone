@@ -3,7 +3,7 @@
 > Citizens of Madar ask Rafeeq, in Arabic or English, about permit fees, rules and their own applications, and get
 > inspections booked, refunds requested and overdue cases escalated, with nothing changing until they approve it.
 
-**Capstone project of the SDAIA Academy bootcamp "Agentic AI Systems Engineering"**, built on the course materials
+**Capstone project of the SDAIA Academy 5-day bootcamp "Agentic AI Systems Engineering"**, built on the course materials
 and labs at **<https://github.com/SDAIAAcademy/agentic-ai>** (the Madar case study, `agentkit`, the MCP server and the
 eval runner come from there; everything in `labs/capstone/rafeeq/` is this project). All data is synthetic.
 
