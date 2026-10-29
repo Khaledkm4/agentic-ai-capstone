@@ -11,7 +11,7 @@
 
 Run from labs/ (it imports agentkit, madar and evals from there). Only OPENROUTER_API_KEY is needed.
 
-What it adds to capstone/starter.py:
+What it adds to the course's capstone starter:
 1. tools: Madar's read tools over MCP (servers/madar_mcp.py), the write tools locally, and load_skill;
 2. context: AGENTS.md as the spec, skills by progressive disclosure, a capped cross-session memory (language and
    verified permit IDs only), history compaction that also drops old reasoning, a cap on tool-result size;
@@ -24,6 +24,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import os
 import re
 import sys
 import time
@@ -34,6 +35,15 @@ from typing import Callable
 HERE = Path(__file__).resolve().parent
 LABS = HERE.parents[1]
 sys.path.insert(0, str(LABS))
+
+from dotenv import load_dotenv  # noqa: E402
+
+# The project's models, so a fresh clone needs only OPENROUTER_API_KEY. agentkit reads these at import; a value set
+# in labs/.env still wins (it is loaded first), and the course defaults (rate-limited Gemma models) are never used.
+load_dotenv(LABS / ".env")
+os.environ.setdefault("AGENT_MODEL", "nvidia/nemotron-3.5-super-vl:free")
+os.environ.setdefault("AGENT_SMALL_MODEL", "nvidia/nemotron-3.5-lightning:free")  # the eval judge
+os.environ.setdefault("AGENT_FALLBACKS", "nvidia/nemotron-3-ultra-550b-a55b:free,nvidia/nemotron-3.5-lightning:free")
 
 from mcp import StdioServerParameters  # noqa: E402
 
@@ -51,7 +61,7 @@ CLOCK = "Today is Sunday 1 November 2026, 09:00 Riyadh time (from the system clo
 # Requirement 4: two configurations that differ in ONE thing. Here: the model. Same spec, tools, harness, budgets.
 MODEL_B = "nvidia/nemotron-3-ultra-550b-a55b:free"
 CONFIGS = {
-    "A": {"model": K.MODEL},  # AGENT_MODEL in labs/.env (nvidia/nemotron-3.5-super-vl:free)
+    "A": {"model": K.MODEL},  # AGENT_MODEL: nvidia/nemotron-3.5-super-vl:free unless labs/.env says otherwise
     "B": {"model": MODEL_B},  # the 550B Nemotron: is a failure a capability problem or a harness problem?
 }
 
